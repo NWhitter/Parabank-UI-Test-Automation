@@ -1,3 +1,4 @@
+@login
 Feature: Login and Logout
   As an customer
   I want to be able to log into the application

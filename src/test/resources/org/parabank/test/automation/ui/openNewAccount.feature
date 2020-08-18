@@ -1,3 +1,4 @@
+@NewAccount
 Feature: Open new account
 
   Scenario: Customer can open a new account

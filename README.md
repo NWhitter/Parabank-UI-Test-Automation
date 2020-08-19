@@ -1,6 +1,6 @@
 # Parabank UI Test Automation
 
-A Java-based Selenium and Cucumber suite which runs tests for the [Parabank application](https://parabank.parasoft.com/parabank/index.htm)
+A Java-based Selenium suite which runs Cucumber features on the [Parabank application](https://parabank.parasoft.com/parabank/index.htm). This suite is created to practice my UI test automation skills using Java.
 
 ## Prerequisites 
 - **Programming Language:**  Java 11

@@ -1,15 +1,11 @@
-package org.parabank.test.automation.ui.stepDefinitions;
+package org.parabank.test.automation.ui.stepdefs;
 
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.parabank.test.automation.ui.models.Customer;
 import org.parabank.test.automation.ui.pages.AccountsOverviewPage;
-import org.parabank.test.automation.ui.pages.LandingPage;
-import org.parabank.test.automation.ui.pages.OpenNewAccountPage;
-import org.parabank.test.automation.ui.pages.SignUpPage;
 import org.parabank.test.automation.ui.webdriver.ContextSteps;
 
 import java.util.Map;
@@ -33,9 +29,14 @@ public class LoginStepdefs {
 
     @When("{} sign(s) in with the following details")
     public void theCustomerSignsInWithTheFollowingDetails(String user, Map<String, String> loginCredentials) {
-        Customer customer = new Customer(loginCredentials.get("username"), loginCredentials.get("password"),
-                loginCredentials.getOrDefault("first name", "John"),
-                loginCredentials.getOrDefault("last name", "Demo"));
+
+        contextSteps.username = loginCredentials.get("username");
+        contextSteps.firstName = loginCredentials.getOrDefault("first name", "John");
+        contextSteps.lastName = loginCredentials.getOrDefault("last name", "Smith");
+
+        Customer customer = new Customer(contextSteps.username, loginCredentials.get("password"),
+                contextSteps.firstName,
+                contextSteps.lastName);
 
         contextSteps.landingPage.login(customer,
                 AccountsOverviewPage.class.getSimpleName());

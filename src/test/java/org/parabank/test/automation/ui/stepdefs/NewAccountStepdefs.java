@@ -1,4 +1,4 @@
-package org.parabank.test.automation.ui.stepDefinitions;
+package org.parabank.test.automation.ui.stepdefs;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -32,10 +32,10 @@ public class NewAccountStepdefs {
     public void theCustomerHasAnAccount() {
     }
 
-    @And("they are on the accounts overview page")
-    public void theyAreOnTheAccountsOverviewPage() {
-        openNewAccountPage.goTo();
-    }
+//    @And("they are on the accounts overview page")
+//    public void theyAreOnTheAccountsOverviewPage() {
+//        openNewAccountPage.goTo();
+//    }
 
     @When("they view the account's details")
     public void theyViewTheAccountSDetails() {

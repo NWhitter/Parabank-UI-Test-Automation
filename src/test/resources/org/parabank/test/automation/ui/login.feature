@@ -6,19 +6,19 @@ Feature: Login and Logout
 
   Scenario: Potential customer can sign up for an new bank account
     Given the customer is on the sign up page
-    When they signs up with the following details
-      | First Name | Caroline       |
-      | Last Name  | Perez          |
-      | Address    | 12 West Street |
-      | City       | Lewis          |
-      | State      | New York       |
-      | Zip Code   | 43035          |
-      | Phone      | 01836483721    |
-      | SSN        | 078-05-1120    |
-      | Username   | caroline103    |
-      | Password   | abc123         |
-      | Confirm    | abc123         |
-    Then their accounts overview page should be displayed
+    When they sign up with the following details
+      | first name | Caroline       |
+      | last name  | Perez          |
+      | address    | 12 West Street |
+      | city       | Lewis          |
+      | state      | New York       |
+      | zip code   | 43035          |
+      | phone      | 01836483721    |
+      | ssn        | 078-05-1120    |
+      | username   | caroline103    |
+      | password   | abc123         |
+      | confirm    | abc123         |
+    Then the account created page should be displayed
     And the message 'Your account was created successfully. You are now logged in.' should be displayed
 
   Scenario: Customer can login with valid credentials
@@ -41,9 +41,9 @@ Feature: Login and Logout
       | username | password | message                                          |
       | john     | invDemo  | The username and password could not be verified. |
       | invUser  | demo     | The username and password could not be verified. |
-      | john     |          | Please enter a username and password.            |
-      |          | demo     | Please enter a username and password.            |
-      |          |          | Please enter a username and password.            |
+      | john     | [blank]  | Please enter a username and password.            |
+      | [blank]  | demo     | Please enter a username and password.            |
+      | [blank]  | [blank]  | Please enter a username and password.            |
 
   Scenario: Signed-in customer can logout
     Given the customer is on their account overview page

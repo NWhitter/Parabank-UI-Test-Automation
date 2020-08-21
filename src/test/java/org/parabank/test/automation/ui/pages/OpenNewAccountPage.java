@@ -2,7 +2,6 @@ package org.parabank.test.automation.ui.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class OpenNewAccountPage extends Page {
@@ -28,18 +27,17 @@ public class OpenNewAccountPage extends Page {
         }
     }
 
-    private OpenNewAccountPage selectAccountType(String type) {
+    public OpenNewAccountPage selectAccountType(String type) {
         if (type != null) {
-                Select accountTypeDropdown = new Select(driver.findElement(accountTypeLocator));
-                if (accountTypeDropdown.getFirstSelectedOption().getText().equals(type))
-                {
-                    accountTypeDropdown.selectByVisibleText(type);
-                }
+            Select accountTypeDropdown = new Select(driver.findElement(accountTypeLocator));
+            if (accountTypeDropdown.getFirstSelectedOption().getText().equals(type)) {
+                accountTypeDropdown.selectByVisibleText(type);
+            }
         }
         return this;
     }
 
-    private OpenNewAccountPage selectTransferAccount(String account) {
+    public OpenNewAccountPage selectTransferAccount(String account) {
         if (account != null) {
             Select tad = new Select(driver.findElement(transferAccountDropDown));
             if (tad.getFirstSelectedOption().getText().equals(account)) {
@@ -49,7 +47,7 @@ public class OpenNewAccountPage extends Page {
         return this;
     }
 
-    private OpenNewAccountPage clickOpenNewAccountButton() {
+    public OpenNewAccountPage clickOpenNewAccountButton() {
         driver.findElement(openNewAccountButton).click();
 
         return this;
@@ -60,10 +58,14 @@ public class OpenNewAccountPage extends Page {
     }
 
     public String getMessage() {
-       return driver.findElement(message).getText();
+        return driver.findElement(message).getText();
     }
 
-    public WebElement getAccountNumber() {
-        return driver.findElement(accountNumber);
+    public String getAccountNumberMessage() {
+        return driver.findElement(accountNumberMessage).getText();
+    }
+
+    public String getAccountNumber() {
+        return driver.findElement(accountNumber).getText();
     }
 }

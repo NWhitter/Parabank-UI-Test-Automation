@@ -10,8 +10,6 @@ public class PropertyLoader {
 
     private static final String BASE_URL = "base.url";
     private static final String BROWSER_NAME = "browser.name";
-    private static final String DB_PATH = "db.path";
-    private static final String LOGIN_PATH = "login.path";
 
     static {
         try {
@@ -31,11 +29,23 @@ public class PropertyLoader {
     }
 
     public static String getDatabasePageUrl() {
-        return getBaseUrl() + properties.getProperty(DB_PATH);
+        return getBaseUrl() + "db.htm";
     }
 
     public static String getLoginPageUrl() {
-        return getBaseUrl() + properties.getProperty(LOGIN_PATH);
+        return getBaseUrl() + "login.htm";
+    }
+
+    public static String getIndexPageUrl() {
+        return getBaseUrl() + "index.htm";
+    }
+
+    public static String getAccountManagementUrl() {
+        return getBaseUrl() + "overview.htm";
+    }
+
+    public static String getAccountCreatedUrl() {
+        return getBaseUrl() + "register.htm";
     }
 
     public static String getBrowserName() {

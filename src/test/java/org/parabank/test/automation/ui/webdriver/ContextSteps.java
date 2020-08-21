@@ -6,30 +6,25 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
-import org.parabank.test.automation.ui.pages.AccountsOverviewPage;
-import org.parabank.test.automation.ui.pages.LandingPage;
-import org.parabank.test.automation.ui.pages.OpenNewAccountPage;
-import org.parabank.test.automation.ui.pages.SignUpPage;
+import org.parabank.test.automation.ui.models.Customer;
+import org.parabank.test.automation.ui.pages.*;
 import uk.co.mwtestconsultancy.CookieAdapter;
-
-import static org.parabank.test.automation.ui.enums.WebBrowsers.CHROME;
 
 
 public class ContextSteps {
-    public String username;
-    public String firstName;
-    public String lastName;
-
+    public Customer customer;
+    public String accountNumber;
     private WebDriver driver;
 
     public LandingPage landingPage;
+    public AccountCreatedPage accountCreatedPage;
     public AccountsOverviewPage accountsOverviewPage;
     public SignUpPage signUpPage;
     public OpenNewAccountPage openNewAccountPage;
 
     @Before
     public void setup() {
-        driver = WebDriverFactory.initDriver(CHROME);
+        driver = WebDriverFactory.initDriver();
     }
 
     public void setCookie() {

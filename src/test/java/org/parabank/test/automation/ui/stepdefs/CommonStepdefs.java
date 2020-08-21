@@ -24,6 +24,7 @@ public class CommonStepdefs {
             case "account overview":
             case "accounts overview":
                 context.setCookie();
+
                 context.accountsOverviewPage = new AccountsOverviewPage(context.getDriver());
                 context.accountsOverviewPage.goTo();
                 break;
@@ -32,6 +33,8 @@ public class CommonStepdefs {
                 context.signUpPage.goTo();
                 break;
             case "open new account":
+                context.setCookie();
+
                 context.openNewAccountPage = new OpenNewAccountPage(context.getDriver());
                 context.openNewAccountPage.goTo();
                 break;

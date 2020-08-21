@@ -3,12 +3,14 @@ package org.parabank.test.automation.ui.stepdefs;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
+import org.parabank.test.automation.ui.helper.PropertyLoader;
 import org.parabank.test.automation.ui.models.Customer;
+import org.parabank.test.automation.ui.pages.AccountCreatedPage;
 import org.parabank.test.automation.ui.pages.AccountsOverviewPage;
+import org.parabank.test.automation.ui.pages.LandingPage;
 import org.parabank.test.automation.ui.webdriver.ContextSteps;
 
-import java.util.Map;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LoginStepdefs {
     private final ContextSteps contextSteps;
@@ -17,26 +19,19 @@ public class LoginStepdefs {
         this.contextSteps = contextSteps;
     }
 
-    @When("{} signs up with the following details")
-    public void theCustomerSignsUpWithTheFollowingDetails(String user, Customer signUpCredentials) {
+    @When("{} sign(s) up with the following details")
+    public void theCustomerSignsUpWithTheFollowingDetails(String user, Customer credentials) {
 
-        contextSteps.firstName = signUpCredentials.getFirstName();
-        contextSteps.lastName = signUpCredentials.getLastName();
-        contextSteps.username = signUpCredentials.getUsername();
-
-        contextSteps.signUpPage.submitForm(signUpCredentials);
+        contextSteps.customer = credentials;
+        contextSteps.signUpPage.submitForm(credentials);
     }
 
     @When("{} sign(s) in with the following details")
-    public void theCustomerSignsInWithTheFollowingDetails(String user, Map<String, String> loginCredentials) {
-
-        contextSteps.username = loginCredentials.get("username");
-        contextSteps.firstName = loginCredentials.getOrDefault("first name", "John");
-        contextSteps.lastName = loginCredentials.getOrDefault("last name", "Smith");
-
-        Customer customer = new Customer(contextSteps.username, loginCredentials.get("password"),
-                contextSteps.firstName,
-                contextSteps.lastName);
+    public void theCustomerSignsInWithTheFollowingDetails(String user, Customer customer) {
+        if (customer.getUsername().equals("john")) {
+            customer.setFirstName("John");
+            customer.setLastName("Smith");
+        }
 
         contextSteps.landingPage.login(customer,
                 AccountsOverviewPage.class.getSimpleName());
@@ -47,30 +42,46 @@ public class LoginStepdefs {
         contextSteps.landingPage = contextSteps.accountsOverviewPage.clickLogout();
     }
 
-    @Then("their accounts overview page should be displayed")
-    public void theCustomersAccountOverviewPageShouldBeDisplayed() {
-        contextSteps.accountsOverviewPage = new AccountsOverviewPage(contextSteps.getDriver());
-        Assert.assertEquals(String.format("Welcome %s %s", contextSteps.firstName, contextSteps.lastName),
-                contextSteps.accountsOverviewPage.getLoggedInName());
-    }
+    @Then("the/their {} page should be displayed")
+    public void thePageShouldBeDisplayed(String page) {
+        switch (page) {
+            case "customer login":
+                contextSteps.landingPage = new LandingPage(contextSteps.getDriver());
+                assertThat(contextSteps.landingPage.getUrl()).contains(PropertyLoader.getLoginPageUrl());
+                break;
+            case "customer index":
+                contextSteps.landingPage = new LandingPage(contextSteps.getDriver());
+                assertThat(contextSteps.landingPage.getUrl()).contains(PropertyLoader.getIndexPageUrl());
+                break;
+            case "accounts overview":
+                contextSteps.accountsOverviewPage = new AccountsOverviewPage(contextSteps.getDriver());
+                assertThat(contextSteps.accountsOverviewPage.getUrl()).contains(PropertyLoader.getAccountManagementUrl());
+                break;
+            case "account created":
+                contextSteps.accountCreatedPage = new AccountCreatedPage(contextSteps.getDriver());
+                assertThat(contextSteps.accountCreatedPage.getUrl()).contains(PropertyLoader.getAccountCreatedUrl());
 
-    @Then("the customer {} page should be displayed")
-    public void theCustomerPageShouldBeDisplayed(String page) {
-        Assert.assertTrue(contextSteps.landingPage.getUrl().contains(page + ".htm"));
+                String loginMessage = String.format("Welcome %s %s", contextSteps.customer.getFirstName(),
+                        contextSteps.customer.getLastName());
+                assertThat(contextSteps.accountCreatedPage.getLoggedInName()).contains(loginMessage);
+                break;
+            default:
+                throw new RuntimeException("Incorrect page: " + page);
+        }
     }
 
     @And("the error message {string} should be displayed")
     public void theErrorMessageShouldBeDisplayed(String message) {
-        Assert.assertEquals(message, contextSteps.landingPage.getErrorMessage());
+        assertThat(contextSteps.landingPage.getErrorMessage()).isEqualTo(message);
     }
 
     @And("the error title {string} should be displayed")
     public void theErrorTitleErrorShouldBeDisplayed(String title) {
-        Assert.assertEquals(title, contextSteps.landingPage.getErrorTitle());
+        assertThat(contextSteps.landingPage.getErrorTitle()).isEqualTo(title);
     }
 
     @And("the message {string} should be displayed")
     public void theMessageShouldBeDisplayed(String message) {
-        Assert.assertEquals(message, contextSteps.accountsOverviewPage.getMessage());
+        assertThat(contextSteps.accountCreatedPage.getMessage()).isEqualTo(message);
     }
 }

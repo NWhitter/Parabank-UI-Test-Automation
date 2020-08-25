@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.parabank.test.automation.ui.models.Customer;
 
-public class SignUpPage extends Page {
+public class SignUpPage extends AbstractPage {
 
     private final By firstNameInput = By.id("customer.firstName");
     private final By lastNameInput = By.id("customer.lastName");

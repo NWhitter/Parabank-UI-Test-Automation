@@ -4,11 +4,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class OpenNewAccountPage extends Page {
+public class OpenNewAccountPage extends AbstractPage {
+
+    private final By accountsOverviewLink = By.linkText("Accounts Overview");
 
     private final By accountTypeLocator = By.id("type");
     private final By transferAccountDropDown = By.id("fromAccountId");
-    private final By openNewAccountButton = By.cssSelector("input[type='submit']");
+    private final By openNewAccountButton = By.cssSelector("#rightPanel > div > div > form > div > input");
     private final By titleHeader = By.className("title");
     private final By message = By.cssSelector(".ng-scope > p:nth-child(2)");
     private final By accountNumberMessage = By.cssSelector(".ng-scope > p:nth-child(3)");
@@ -22,9 +24,15 @@ public class OpenNewAccountPage extends Page {
     public void goTo() {
         String goToUrl = baseUrl + "/openaccount.htm";
 
-        if (! getUrl().equals(goToUrl)) {
+        if (!getUrl().equals(goToUrl)) {
             driver.get(baseUrl + "/openaccount.htm");
         }
+    }
+
+    public AccountsOverviewPage clickAccountsOverviewLink() {
+        driver.findElement(accountsOverviewLink).click();
+
+        return new AccountsOverviewPage(driver);
     }
 
     public OpenNewAccountPage selectAccountType(String type) {
@@ -51,6 +59,12 @@ public class OpenNewAccountPage extends Page {
         driver.findElement(openNewAccountButton).click();
 
         return this;
+    }
+
+    public AccountDetailsPage clickAccountNumber() {
+        driver.findElement(accountNumber).click();
+
+        return new AccountDetailsPage(driver);
     }
 
     public String getTitle() {

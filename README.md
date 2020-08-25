@@ -8,11 +8,14 @@ A Java-based Selenium suite which runs Cucumber features on the [Parabank applic
 
 ## Dependencies:
 - [Assertj Core 3.16.1](https://assertj.github.io/doc/)
+- Cucumber Datatable 6.2.2
 - Cucumber Java 6.2.2
 - Cucumber Junit 6.2.2
 - Cucumber Picocontainer 6.2.2
-- Junit 4.13
+- Junit 5.7.0-RC1
+- Log4j 2.13.3
 - Lombok 1.18.12
+- Owner 1.0.12
 - RestAssured 4.3.1
 - Selenium 4.0.0-alpha-6
 - Selenium to RestAssured 0.3

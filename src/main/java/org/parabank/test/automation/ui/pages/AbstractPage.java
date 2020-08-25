@@ -1,13 +1,19 @@
 package org.parabank.test.automation.ui.pages;
 
 import org.openqa.selenium.WebDriver;
+import org.parabank.test.automation.ui.config.Configuration;
+import org.parabank.test.automation.ui.config.ConfigurationLoader;
 
-public abstract class Page {
-    String baseUrl = "https://parabank.parasoft.com/parabank/";
+public abstract class AbstractPage {
+
     WebDriver driver;
+    String baseUrl;
 
-    public Page(WebDriver driver) {
+    public AbstractPage(WebDriver driver) {
         this.driver = driver;
+
+        Configuration configuration = ConfigurationLoader.getConfiguration();
+        baseUrl = configuration.url();
     }
 
     public abstract void goTo();

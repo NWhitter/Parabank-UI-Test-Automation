@@ -7,23 +7,29 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.safari.SafariDriver;
-import org.parabank.test.automation.ui.enums.WebBrowsers;
-import org.parabank.test.automation.ui.helper.PropertyLoader;
+import org.parabank.test.automation.ui.configuration.Configuration;
+import org.parabank.test.automation.ui.configuration.ConfigurationLoader;
+import org.parabank.test.automation.ui.enums.WebBrowser;
 
-import static org.parabank.test.automation.ui.enums.WebBrowsers.CHROME_LOCAL;
+public class DriverFactory {
 
-public class WebDriverFactory {
-    public static WebDriver initDriver() {
+    private DriverFactory() {
+    }
 
-        WebBrowsers browser = WebBrowsers.valueOf(PropertyLoader.getBrowserName());
+    public static WebDriver init() {
+
+        Configuration configuration = ConfigurationLoader.getConfiguration();
+
+        WebBrowser browser = WebBrowser.valueOf(configuration.browser().toUpperCase());
+        boolean isHeadless = ConfigurationLoader.getConfiguration().headless();
 
         switch (browser) {
-            case CHROME_REMOTE:
-            case CHROME_LOCAL:
+            case CHROME:
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions chromeOptions = new ChromeOptions();
-                if (browser.equals(CHROME_LOCAL)) {
+                if (isHeadless) {
                     chromeOptions.addArguments("--headless",
                             "--disable-gpu",
                             "--window-size=1920,1200",
@@ -31,11 +37,17 @@ public class WebDriverFactory {
                 }
                 return new ChromeDriver(chromeOptions);
 
-            case FIREFOX_LOCAL:
+            case FIREFOX:
                 WebDriverManager.firefoxdriver().setup();
+                FirefoxOptions firefoxOptions = new FirefoxOptions();
+                if (isHeadless) {
+                    firefoxOptions.addArguments("-headless",
+                            "-height 1200",
+                            "-width 1920");
+                }
                 return new FirefoxDriver();
 
-            case EDGE_LOCAL:
+            case EDGE:
                 WebDriverManager.edgedriver().setup();
                 EdgeOptions edgeOptions = new EdgeOptions();
                 edgeOptions.setHeadless(true)
@@ -45,7 +57,10 @@ public class WebDriverFactory {
                                 "--ignore-certificate-errors");
                 return new EdgeDriver();
 
-            case SAFARI_LOCAL:
+            case SAFARI:
+                if (isHeadless) {
+                    System.out.println("Safari headless is not supported, using Windowed mode");
+                }
                 return new SafariDriver();
 
             default:

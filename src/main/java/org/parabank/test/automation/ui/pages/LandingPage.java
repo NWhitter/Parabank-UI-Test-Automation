@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.parabank.test.automation.ui.models.Customer;
 
-public class LandingPage extends Page {
+public class LandingPage extends AbstractPage {
 
     private final By nameInput = By.name("username");
     private final By passwordInput = By.name("password");
@@ -37,19 +37,19 @@ public class LandingPage extends Page {
         return this;
     }
 
-    public Page clickSubmit(String pageName) {
+    public AbstractPage clickSubmit(String pageName) {
         driver.findElement(submitInput).click();
 
         return selectPage(pageName);
     }
 
-    public Page login(Customer customer, String pageName) {
+    public AbstractPage login(Customer customer, String pageName) {
         typeUsername(customer.getUsername());
         typePassword(customer.getPassword());
         return clickSubmit(pageName);
     }
 
-    public Page selectPage(String pageName) {
+    public AbstractPage selectPage(String pageName) {
 
         if (pageName.equals(LandingPage.class.getSimpleName())) {
             return new LandingPage(driver);

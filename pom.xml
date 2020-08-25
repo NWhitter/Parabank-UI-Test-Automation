@@ -10,7 +10,9 @@
     <packaging>jar</packaging>
 
     <properties>
+        <owner.version>1.0.12</owner.version>
         <cucumber.version>6.2.2</cucumber.version>
+        <cucumber.dt.version>3.3.1</cucumber.dt.version>
         <junit.version>5.7.0-RC1</junit.version>
         <restassured.version>4.3.1</restassured.version>
         <selenium.version>4.0.0-alpha-6</selenium.version>
@@ -18,10 +20,16 @@
         <assertj.version>3.16.1</assertj.version>
         <str.version>0.3</str.version>
         <lombok.version>1.18.12</lombok.version>
+        <log4j.version>2.13.3</log4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.aeonbits.owner</groupId>
+            <artifactId>owner</artifactId>
+            <version>${owner.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
@@ -32,25 +40,21 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
             <version>${cucumber.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>${junit.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>${restassured.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -66,7 +70,6 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>uk.co.mwtestconsultancy</groupId>
@@ -78,6 +81,22 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>datatable</artifactId>
+            <version>${cucumber.dt.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
 
     </dependencies>
